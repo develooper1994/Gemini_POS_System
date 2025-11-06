@@ -55,3 +55,20 @@ def test_pay_with_qr_button_in_checkout_section(client):
     assert b'<div id="checkout-section">' in response.data
     assert b'<button id="pay-with-qr-btn">Pay with QR</button>' in response.data
 
+def test_checkout_endpoint(client):
+    # Simulate a cart with items and a total amount
+    test_cart_items = [
+        {"productId": "1", "name": "Laptop", "price": 1200.00, "quantity": 1},
+        {"productId": "2", "name": "Mouse", "price": 25.00, "quantity": 2}
+    ]
+    test_total_amount = 1250.00
+
+    response = client.post(
+        '/checkout',
+        json={'cartItems': test_cart_items, 'totalAmount': test_total_amount}
+    )
+
+    assert response.status_code == 200
+    json_data = response.get_json()
+    assert json_data['success'] == True
+    assert 'transaction_id' in json_data
