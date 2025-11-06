@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const productCatalog = document.getElementById('product-catalog');
     const cartSection = document.getElementById('cart');
     const checkoutSection = document.getElementById('checkout-section');
+    const applyDiscountBtn = document.getElementById('apply-discount-btn');
+    let discountApplied = false;
 
     productCatalog.addEventListener('click', (event) => {
         if (event.target.classList.contains('add-to-cart')) {
@@ -15,6 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItems.push(item);
             updateCartDisplay();
             updateTotal();
+        }
+    });
+
+    applyDiscountBtn.addEventListener('click', () => {
+        if (!discountApplied) {
+            let currentTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+            currentTotal *= 0.9; // Apply 10% discount
+            checkoutSection.innerHTML = `<h2>Checkout</h2><p>Total: $${currentTotal.toFixed(2)}</p>`;
+            discountApplied = true;
+            applyDiscountBtn.disabled = true; // Disable button after one use
         }
     });
 

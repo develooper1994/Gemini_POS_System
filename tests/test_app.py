@@ -37,3 +37,8 @@ def test_main_js_link_in_index_html(client):
 def test_total_display_in_checkout_section(client):
     response = client.get('/')
     assert b'<div id="checkout-section">' in response.data
+
+def test_discount_button_in_checkout_section(client):
+    response = client.get('/')
+    assert b'<div id="checkout-section">' in response.data
+    assert b'<button id="apply-discount-btn">Apply 10% Discount</button>' in response.data
