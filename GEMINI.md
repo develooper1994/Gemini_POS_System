@@ -2,10 +2,10 @@
 
 ## Project Overview
 
-This project is a "Gemini POS (Point of Sale)" system. The goal is to build a web application with a Python Flask backend and a standard HTML/CSS/JavaScript frontend. The development process follows a detailed plan outlined in `SUNUM_PLANI.md`, which involves creating the application scaffold, adding core logic for a shopping cart, implementing interactive features like discounts, and adding a modern QR code payment feature. Recently, features for managing item quantities in the cart and removing items have been added.
+This project is a "Gemini POS (Point of Sale)" system. The goal is to build a web application with a Python Flask backend and a standard HTML/CSS/JavaScript frontend. The development process follows a detailed plan outlined in `SUNUM_PLANI.md`, which involves creating the application scaffold, adding core logic for a shopping cart, implementing interactive features like discounts, and adding a modern QR code payment feature. Recently, features for managing item quantities in the cart, removing items, and completing purchases with transaction recording have been added, along with a fix for a discount application bug.
 
 **Key Technologies:**
-*   **Backend:** Python (Flask)
+*   **Backend:** Python (Flask), SQLite
 *   **Frontend:** HTML, CSS, JavaScript
 *   **Testing:** Pytest
 *   **Version Control:** Git
@@ -16,9 +16,10 @@ This project is a "Gemini POS (Point of Sale)" system. The goal is to build a we
 *   **Product Catalog:** Displays a list of products with their names, prices, and an "Add to Cart" button.
 *   **Shopping Cart:** Allows users to add products to a cart. Displays the name, price, and quantity of each item.
 *   **Remove from Cart:** Users can remove individual items from the cart, which decrements the quantity or removes the item entirely if only one is present.
-*   **Total Calculation:** Automatically calculates and displays the total price of items in the cart.
+*   **Total Calculation:** Automatically calculates and displays the total price of items in the cart, with correct discount application.
 *   **Discount Application:** A one-time 10% discount can be applied to the total.
 *   **QR Code Payment:** Generates a QR code based on the total amount for simulated payment.
+*   **Complete Purchase (Transaction Recording):** A button to finalize the purchase, which records transaction details (items, quantities, total) into an SQLite database and provides user feedback.
 
 ## Development Workflow
 
@@ -47,9 +48,9 @@ This project follows a Test-Driven Development (TDD) approach. Each new feature 
 3.  **Run the Application:**
     *   The main application is in `app.py`. To start the Flask development server, run:
         ```bash
-        python app.py
+        source venv/bin/activate && flask run --port 5001
         ```
-    *   The application will be accessible at `http://127.0.0.1:5000`.
+    *   The application will be accessible at `http://127.0.0.1:5001`.
 
 ## Project Structure
 
