@@ -33,3 +33,7 @@ def test_product_display_in_index_html(client):
 def test_main_js_link_in_index_html(client):
     response = client.get('/')
     assert b'<script src="/static/js/main.js"></script>\n</body>' in response.data
+
+def test_total_display_in_checkout_section(client):
+    response = client.get('/')
+    assert b'<div id="checkout-section">' in response.data

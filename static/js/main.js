@@ -2,12 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartItems = [];
     const productCatalog = document.getElementById('product-catalog');
     const cartSection = document.getElementById('cart');
+    const checkoutSection = document.getElementById('checkout-section');
 
     productCatalog.addEventListener('click', (event) => {
         if (event.target.classList.contains('add-to-cart')) {
             const productId = event.target.dataset.productId;
-            // In a real application, you would fetch product details from a backend
-            // For this example, we'll use dummy data or data embedded in the HTML
             const productElement = event.target.closest('.product-item');
             const productName = productElement.querySelector('h3').textContent;
             const productPrice = parseFloat(productElement.querySelector('p').textContent.replace('Price: $', ''));
@@ -15,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = { id: productId, name: productName, price: productPrice };
             cartItems.push(item);
             updateCartDisplay();
+            updateTotal();
         }
     });
 
@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cartSection.innerHTML = '<h2>Shopping Cart</h2>';
         if (cartItems.length === 0) {
             cartSection.innerHTML += '<p>Your cart is empty.</p>';
-            return;
         }
 
         const ul = document.createElement('ul');
@@ -33,4 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         cartSection.appendChild(ul);
     }
+
+    function updateTotal() {
+        let total = cartItems.reduce((sum, item) => sum + item.price, 0);
+        checkoutSection.innerHTML = `<h2>Checkout</h2><p>Total: $${total.toFixed(2)}</p>`;
+    }
+
+    updateTotal(); // Initial call to display total on page load
 });
