@@ -15,3 +15,7 @@ def client():
 def test_index_route(client):
     response = client.get('/')
     assert response.status_code == 200
+
+def test_css_link_in_index_html(client):
+    response = client.get('/')
+    assert b'<link rel="stylesheet" href="/static/css/style.css">' in response.data
