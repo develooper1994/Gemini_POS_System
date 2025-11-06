@@ -49,3 +49,8 @@ def test_generate_qr_route(client):
     assert response.content_type == 'image/png'
     assert response.data is not None
     assert len(response.data) > 0
+
+def test_pay_with_qr_button_in_checkout_section(client):
+    response = client.get('/')
+    assert b'<div id="checkout-section">' in response.data
+    assert b'<button id="pay-with-qr-btn">Pay with QR</button>' in response.data

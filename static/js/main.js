@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartSection = document.getElementById('cart');
     const checkoutSection = document.getElementById('checkout-section');
     const applyDiscountBtn = document.getElementById('apply-discount-btn');
+    const payWithQrBtn = document.getElementById('pay-with-qr-btn');
+    const qrCodeDisplay = document.getElementById('qr-code-display');
     let discountApplied = false;
 
     productCatalog.addEventListener('click', (event) => {
@@ -27,6 +29,33 @@ document.addEventListener('DOMContentLoaded', () => {
             checkoutSection.innerHTML = `<h2>Checkout</h2><p>Total: $${currentTotal.toFixed(2)}</p>`;
             discountApplied = true;
             applyDiscountBtn.disabled = true; // Disable button after one use
+        }
+    });
+
+    payWithQrBtn.addEventListener('click', async () => {
+        let total = cartItems.reduce((sum, item) => sum + item.price, 0);
+        if (discountApplied) {
+            total *= 0.9;
+        }
+        const qrData = `Total: $${total.toFixed(2)}`;
+        const qrUrl = `/generate_qr?data=${encodeURIComponent(qrData)}`;
+
+        try {
+            const response = await fetch(qrUrl);
+            if (response.ok) {
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
+                const imgElement = document.createElement('img');
+                imgElement.src = imageUrl;
+                imgElement.alt = 'QR Code';
+                qrCodeDisplay.innerHTML = ''; // Clear previous QR code
+                qrCodeDisplay.appendChild(imgElement);
+            } else {
+                qrCodeDisplay.innerHTML = '<p>Error generating QR code.</p>';
+            }
+        } catch (error) {
+            console.error('Error fetching QR code:', error);
+            qrCodeDisplay.innerHTML = '<p>Error fetching QR code.</p>';
         }
     });
 
