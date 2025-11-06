@@ -59,5 +59,5 @@ This project follows a Test-Driven Development (TDD) approach. Each new feature 
 *   `templates/index.html`: The primary HTML file for the user interface.
 *   `static/css/style.css`: For styling the application.
 *   `static/js/main.js`: For client-side interactivity.
-*   `SUNUM_PLANI.md`: Contains the step-by-step development plan for the live coding presentation.
+*   `README.md`: Contains the step-by-step development plan for the live coding presentation.
 *   `GEMINI.md`: This file, providing an overview and instructions for the project.
