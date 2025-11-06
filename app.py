@@ -1,6 +1,8 @@
 
 import os
-from flask import Flask, render_template
+import io
+import qrcode
+from flask import Flask, render_template, request, send_file
 
 app = Flask(__name__)
 
@@ -19,6 +21,18 @@ products = [
 @app.route('/')
 def index():
     return render_template('index.html', products=products)
+
+@app.route('/generate_qr')
+def generate_qr():
+    data = request.args.get('data', '')
+    if not data:
+        return "No data provided for QR code", 400
+
+    img = qrcode.make(data)
+    buf = io.BytesIO()
+    img.save(buf, 'PNG')
+    buf.seek(0)
+    return send_file(buf, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(debug=True)

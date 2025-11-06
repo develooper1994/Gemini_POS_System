@@ -42,3 +42,10 @@ def test_discount_button_in_checkout_section(client):
     response = client.get('/')
     assert b'<div id="checkout-section">' in response.data
     assert b'<button id="apply-discount-btn">Apply 10% Discount</button>' in response.data
+
+def test_generate_qr_route(client):
+    response = client.get('/generate_qr?data=test_qr_data')
+    assert response.status_code == 200
+    assert response.content_type == 'image/png'
+    assert response.data is not None
+    assert len(response.data) > 0
